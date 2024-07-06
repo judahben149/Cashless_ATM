@@ -2,7 +2,9 @@ package com.shashank.cashlessatm.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.shashank.cashlessatm.domain.SessionManager
 import com.shashank.cashlessatm.utils.Constants
+import com.shashank.cashlessatm.utils.PreferencesHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +27,17 @@ object AppModule {
     @Singleton
     fun providesSharedPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(Constants.SETTINGS, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun providesPreferencesHelper(sharedPreferences: SharedPreferences): PreferencesHelper {
+        return PreferencesHelper(sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSessionManager(prefsHelper: PreferencesHelper): SessionManager {
+        return SessionManager(prefsHelper)
     }
 }
