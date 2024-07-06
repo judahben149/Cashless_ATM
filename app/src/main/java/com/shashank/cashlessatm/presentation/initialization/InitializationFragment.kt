@@ -31,7 +31,7 @@ class InitializationFragment : Fragment() {
 
         with(binding) {
             btnInit.setOnClickListener {
-                viewModel
+                viewModel.initialize()
             }
         }
 
