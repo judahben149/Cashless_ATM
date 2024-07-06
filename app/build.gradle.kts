@@ -60,7 +60,9 @@ dependencies {
     implementation(libs.navigation.fragment)
 
     // Jpos
-    implementation(libs.jpos)
+//    implementation(libs.jpos)
+    // Jpos Jar file
+    implementation(files("libs/jpos-1.9.0.jar"))
 
 
     testImplementation(libs.junit)
