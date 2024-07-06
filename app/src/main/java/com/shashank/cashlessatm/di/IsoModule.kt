@@ -4,6 +4,10 @@ import android.content.Context
 import com.shashank.cashlessatm.data.network.iso.WorldPayIsoServiceImpl
 import com.shashank.cashlessatm.data.network.tcpip.WorldPayChannel
 import com.shashank.cashlessatm.domain.SessionManager
+import com.shashank.cashlessatm.utils.PreferencesHelper
+import com.shashank.cashlessatm.utils.iso.IsoUtils
+import com.shashank.cashlessatm.utils.iso.WorldPayPackager
+import com.shashank.cashlessatm.utils.system.SystemUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,9 +24,16 @@ object IsoModule {
     @Singleton
     fun providesWorldPayPackager(
         context: Context
-    ): GenericPackager {
-        val packagerInputStream: InputStream = context.assets.open("worldpay_packager.xml")
-        return GenericPackager(packagerInputStream)
+    ): WorldPayPackager {
+        SystemUtils.fixXmlParserIssue()
+        val packagerInputStream: InputStream = context.assets.open("worldpay_packager_test.xml")
+        return WorldPayPackager(packagerInputStream)
+    }
+
+    @Provides
+    @Singleton
+    fun providesGenericPackager(worldPayPackager: WorldPayPackager): GenericPackager {
+        return worldPayPackager
     }
 
     @Provides
@@ -38,8 +49,16 @@ object IsoModule {
     @Singleton
     fun providesWorldPayIsoServiceImpl(
         channel: WorldPayChannel,
-        sm: SessionManager
+        packager: WorldPayPackager,
+        sm: SessionManager,
+        isoUtils: IsoUtils
     ): WorldPayIsoServiceImpl {
-        return WorldPayIsoServiceImpl(channel, sm)
+        return WorldPayIsoServiceImpl(channel, packager, sm, isoUtils)
+    }
+
+    @Provides
+    @Singleton
+    fun providesIsoUtils(preferencesHelper: PreferencesHelper): IsoUtils {
+        return IsoUtils(preferencesHelper)
     }
 }
