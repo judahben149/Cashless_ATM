@@ -5,6 +5,7 @@ object Constants {
     const val DEFAULT = "DEFAULT"
 
     // Pref Keys
+    const val KEY_STAN = "KEY_STAN"
     const val KEY_IP_ADDRESS = "KEY_IP_ADDRESS"
     const val KEY_PORT = "KEY_PORT"
     const val KEY_TIMEOUT = "KEY_TIMEOUT"

@@ -32,8 +32,12 @@ class WorldPayChannel @Inject constructor(
         }
     }
 
+    override fun getHeaderLength(): Int {
+        return super.getHeaderLength()
+    }
+
     override fun sendMessageHeader(m: ISOMsg, len: Int) {
-        val header = constructWorldpayHeader(m, len)
+        val header = constructWorldpayHeader(len)
         serverOut.write(header.toByteArray())
     }
 
@@ -43,7 +47,7 @@ class WorldPayChannel @Inject constructor(
         return String(headerBytes.copyOfRange(2, 6)).toInt()
     }
 
-    private fun constructWorldpayHeader(m: ISOMsg, len: Int): String {
+    private fun constructWorldpayHeader(len: Int): String {
         val messageOriginator = "BT" // This should be configurable
         val messageLength = len.toString().padStart(4, '0')
         val echoData = "000000000000000" // This should be filled with actual echo data
@@ -51,10 +55,10 @@ class WorldPayChannel @Inject constructor(
         return "$messageOriginator$messageLength$echoData"
     }
 
-    override fun sendMessage(m: ISOMsg, len: Int) {
-        sendMessageHeader(m, len)
-        super.sendMessage(m, len)
-    }
+//    override fun sendMessage(m: ISOMsg, len: Int) {
+//        sendMessageHeader(m, len)
+//        super.sendMessage(m, 0, len)  // CHECK parameters -- OFFSET
+//    }
 
     override fun receive(): ISOMsg {
         val headerBytes = ByteArray(21) // Full header length
