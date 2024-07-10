@@ -25,8 +25,9 @@ object IsoModule {
     fun providesWorldPayPackager(
         context: Context
     ): WorldPayPackager {
-        SystemUtils.fixXmlParserIssue()
-        val packagerInputStream: InputStream = context.assets.open("worldpay_packager_test.xml")
+//        SystemUtils.fixXmlParserIssue()
+        SystemUtils.fixXmlParserIssue2()
+        val packagerInputStream: InputStream = context.assets.open("worldpay.xml")
         return WorldPayPackager(packagerInputStream)
     }
 

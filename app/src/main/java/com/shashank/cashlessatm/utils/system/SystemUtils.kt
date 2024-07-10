@@ -14,4 +14,8 @@ object SystemUtils {
             set(null, true)
         }
     }
+
+    fun fixXmlParserIssue2() {
+//        System.setProperty("sax.parser", "com.sun.org.apache.xerces.internal.parsers.SAXParser")
+    }
 }
