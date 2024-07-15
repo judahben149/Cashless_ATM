@@ -3,6 +3,7 @@ package com.shashank.cashlessatm.di
 import android.content.Context
 import com.shashank.cashlessatm.data.network.iso.WorldPayIsoServiceImpl
 import com.shashank.cashlessatm.data.network.tcpip.WorldPayChannel
+import com.shashank.cashlessatm.data.network.tcpip.WorldpayCustomChannel
 import com.shashank.cashlessatm.domain.SessionManager
 import com.shashank.cashlessatm.utils.PreferencesHelper
 import com.shashank.cashlessatm.utils.iso.IsoUtils
@@ -27,7 +28,7 @@ object IsoModule {
     ): WorldPayPackager {
 //        SystemUtils.fixXmlParserIssue()
         SystemUtils.fixXmlParserIssue2()
-        val packagerInputStream: InputStream = context.assets.open("worldpay.xml")
+        val packagerInputStream: InputStream = context.assets.open("worldpay_packager.xml")
         return WorldPayPackager(packagerInputStream)
     }
 
@@ -48,13 +49,24 @@ object IsoModule {
 
     @Provides
     @Singleton
+    fun providesWorldPayCustomChannel(
+        worldPayPackager: GenericPackager,
+        sm: SessionManager
+    ): WorldpayCustomChannel {
+        return WorldpayCustomChannel(sm.getIp(), sm.getPort(), worldPayPackager, sm)
+    }
+
+    @Provides
+    @Singleton
     fun providesWorldPayIsoServiceImpl(
         channel: WorldPayChannel,
+        customChannel: WorldpayCustomChannel,
+        context: Context,
         packager: WorldPayPackager,
         sm: SessionManager,
         isoUtils: IsoUtils
     ): WorldPayIsoServiceImpl {
-        return WorldPayIsoServiceImpl(channel, packager, sm, isoUtils)
+        return WorldPayIsoServiceImpl(channel, customChannel, context, packager, sm, isoUtils)
     }
 
     @Provides
