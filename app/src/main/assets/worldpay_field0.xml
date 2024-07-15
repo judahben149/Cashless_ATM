@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE isopackager PUBLIC
+    "-//jPOS/jPOS Generic Packager DTD 1.0//EN"
+    "http://jpos.org/dtd/generic-packager-1.0.dtd">
+
+<!-- ISO 8583:1987 (BINARY) field descriptions for GenericPackager -->
+
+<isopackager>
+    <isofield
+        id="1"
+        length="3"
+        name="TERMINAL APPLICATION HEADER"
+        class="org.jpos.iso.IFA_LLLCHAR"/>
+    <isofield
+        id="2"
+        length="4"
+        name="MESSAGE TYPE INDICATOR"
+        class="org.jpos.iso.IFB_NUMERIC"/>
+    <isofield
+        id="3"
+        length="8"
+        name="PRIMARY BITMAP"
+        class="org.jpos.iso.IFB_BITMAP"/>
+</isopackager>

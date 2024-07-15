@@ -6,12 +6,29 @@
 <!-- ISO 8583:1987 (BINARY) field descriptions for GenericPackager -->
 
 <isopackager>
-  <isofield
+  <isofieldpackager
       id="0"
-      length="4"
-      name="MESSAGE TYPE INDICATOR"
-      pad="true"
-      class="org.jpos.iso.IFB_NUMERIC"/>
+      length="15"
+      name="MTI and Bitmap"
+      emitBitmap="false"
+      class="org.jpos.iso.IFA_BINARY"
+      packager="org.jpos.iso.packager.GenericSubFieldPackager">
+    <isofield
+        id="1"
+        length="3"
+        name="TERMINAL APPLICATION HEADER"
+        class="org.jpos.iso.IFA_LLLCHAR"/>
+    <isofield
+        id="2"
+        length="4"
+        name="MESSAGE TYPE INDICATOR"
+        class="org.jpos.iso.IFA_NUMERIC"/>
+    <isofield
+        id="3"
+        length="8"
+        name="PRIMARY BITMAP"
+        class="org.jpos.iso.IFB_BITMAP"/>
+  </isofieldpackager>
   <isofield
       id="1"
       length="16"
