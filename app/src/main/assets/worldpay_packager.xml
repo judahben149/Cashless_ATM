@@ -6,14 +6,14 @@
 <isopackager>
   <isofield
       id="0"
-      length="999"
-      name="Field 0"
-      class="org.jpos.iso.IFE_LLLCHAR"/>
+      length="4"
+      name="Message Type Indicator"
+      class="org.jpos.iso.IFA_NUMERIC"/>
   <isofield
       id="1"
       length="16"
-      name="SECONDARY BIT MAP"
-      class="org.jpos.iso.IFA_BITMAP"/>
+      name="BITMAP"
+      class="org.jpos.iso.IFB_BITMAP"/>
   <isofield
       id="2"
       length="19"
@@ -579,12 +579,57 @@
       length="999"
       name="RESERVED NATIONAL USE"
       class="org.jpos.iso.IFA_LLLCHAR"/>
-  <isofield
+  <isofieldpackager
       id="115"
       length="9999"
       name="TERMINAL SPECIFIC DATA"
-      class="org.jpos.iso.IFA_LLLLCHAR"/>
-
+      emitBitmap="false"
+      class="org.jpos.iso.IFA_LLLLCHAR"
+      packager="org.jpos.iso.packager.GenericSubFieldPackager">
+    <isofield
+        id="0"
+        length="16"
+        name="BITMAP"
+        class="org.jpos.iso.IFB_BITMAP"/>
+    <isofield
+        id="1"
+        length="4"
+        name="BANK ID"
+        class="org.jpos.iso.IFA_NUMERIC"/>
+    <isofield
+        id="2"
+        length="3"
+        name="TERMINAL ID"
+        class="org.jpos.iso.IFA_NUMERIC"/>
+    <isofield
+        id="3"
+        length="9"
+        name="ORIGINAL AUTHORIZATION RETRIEVAL REFERENCE NUMBER"
+        class="org.jpos.iso.IFA_NUMERIC"/>
+    <isofield
+        id="4"
+        length="21"
+        name="MASKED ACCOUNT NUMBER"
+        class="org.jpos.iso.IFA_LLCHAR"/>
+    <isofieldpackager
+        id="5"
+        length="3"
+        name="OPTIONAL PROCESSING INDICATORS"
+        emitBitmap="true"
+        class="org.jpos.iso.IFA_LLCHAR"
+        packager="org.jpos.iso.packager.GenericSubFieldPackager">
+      <isofield
+          id="0"
+          length="1"
+          name="BITMAP"
+          class="org.jpos.iso.IFB_BITMAP"/>
+      <isofield
+          id="1"
+          length="1"
+          name="HOST CAPTURE ADJUSTMENT CAPABILITY FLAG"
+          class="org.jpos.iso.IFA_LCHAR"/>
+    </isofieldpackager>
+  </isofieldpackager>
   <isofield
       id="116"
       length="999"
@@ -640,7 +685,6 @@
       length="999"
       name="RESERVED PRIVATE USE"
       class="org.jpos.iso.IFA_LLLCHAR"/>
-
   <isofieldpackager
       id="127"  
       length="999999"
@@ -783,7 +827,6 @@
           name="ORIGINAL NODE"
           class="org.jpos.iso.IFA_LLCHAR"/>
   </isofieldpackager>
-
   <isofield
       id="128"
       length="999"
