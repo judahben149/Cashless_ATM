@@ -60,18 +60,19 @@ class WorldPayIsoServiceImpl @Inject constructor(
             set("115.1", "0000")
             set("115.2", "123")
             set("115.3", "012345678")
+            set("124.3", "101")
         }
 
         tmkRequest.dump(System.out, "")
         val packed = tmkRequest.pack()
-        val bitmap = tmkRequest.getValue(-1)
-        myLogger.log("BITMAP ----> $bitmap")
+//        val bitmap = tmkRequest.getValue(-1)
+//        myLogger.log("BITMAP ----> $bitmap")
 
-        val unpacked = ISOMsg()
-        unpacked.packager = packager
-        unpacked.unpack(packed)
-        val bitmap2 = tmkRequest.getValue(-1)
-        myLogger.log("BITMAP UNPACKED----> $bitmap2")
+//        val unpacked = ISOMsg()
+//        unpacked.packager = packager
+//        unpacked.unpack(packed)
+//        val bitmap2 = tmkRequest.getValue(-1)
+//        myLogger.log("BITMAP UNPACKED----> $bitmap2")
 
         customChannel.apply {
             connect()

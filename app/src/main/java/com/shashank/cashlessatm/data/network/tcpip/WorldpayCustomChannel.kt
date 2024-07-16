@@ -4,15 +4,11 @@ import com.shashank.cashlessatm.domain.SessionManager
 import org.jpos.iso.BaseChannel
 import org.jpos.iso.ISOException
 import org.jpos.iso.ISOMsg
-import org.jpos.iso.ISOUtil
 import org.jpos.iso.packager.GenericPackager
-import org.jpos.util.Logger
-import java.io.BufferedReader
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
 import java.net.SocketException
-import java.util.BitSet
 import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 import kotlin.jvm.Throws
@@ -20,9 +16,9 @@ import kotlin.jvm.Throws
 class WorldpayCustomChannel @Inject constructor(
     ipAddress: String,
     port: Int,
-    private val packager: GenericPackager?,
+    private val worldPayPackager: GenericPackager?,
     sessionManager: SessionManager
-) : BaseChannel(ipAddress, port, packager) {
+) : BaseChannel(ipAddress, port, worldPayPackager) {
 
     private var myHeader = ""
 
@@ -79,15 +75,20 @@ class WorldpayCustomChannel @Inject constructor(
             logRawData("Received Message -->", rawData)
 
             // Remove header structure from stream
+            val headerLength = 21
+            val data = rawData.copyOfRange(headerLength, rawData.size)
 
             val message = ISOMsg()
-            message.packager = packager
-            message.unpack(rawData)
+            message.packager = worldPayPackager
+            message.unpack(data)
             message
 //        return super.receive() // To try too
         } catch (e: SocketException) {
             println("SocketException: ${e.message}")
             throw ISOException("Error receiving message", e)
+        } catch (e: IllegalArgumentException) {
+            println("IllegalArgumentException: ${e.message}")
+            throw ISOException("Illegal Argument Exception - Likely empty raw data?", e)
         }
     }
 
