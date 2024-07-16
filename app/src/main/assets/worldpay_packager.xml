@@ -670,11 +670,54 @@
       length="999"
       name="RESERVED PRIVATE USE"
       class="org.jpos.iso.IFA_LLLCHAR"/>
-  <isofield
+  <isofieldpackager
       id="124"
       length="999"
       name="TRANSACTION DEPENDENT DATA"
+      emitBitmap="true"
+      class="org.jpos.iso.IFA_LLLCHAR"
+      packager="org.jpos.iso.packager.GenericSubFieldPackager">
+  <isofield
+      id="0"
+      length="16"
+      name="BITMAP"
+      class="org.jpos.iso.IFB_BITMAP"/>
+  <isofield
+      id="1"
+      length="999"
+      name="Encryption Key Data"
       class="org.jpos.iso.IFA_LLLCHAR"/>
+  <isofield
+      id="2"
+      length="6"
+      name="Encryption Check Digits"
+      class="org.jpos.iso.IFA_LCHAR"/>
+  <isofield
+      id="3"
+      length="3"
+      name="Encryption Key Data Format"
+      class="org.jpos.iso.IFA_LCHAR"/>
+  <isofield
+      id="4"
+      length="3"
+      name="Master Key Index"
+      class="org.jpos.iso.IFA_NUMERIC"/>
+  <isofield
+      id="5"
+      length="3"
+      name="Working Key Index"
+      class="org.jpos.iso.IFA_NUMERIC"/>
+  <isofield
+      id="6"
+      length="3"
+      name="Key Type to Return"
+      class="org.jpos.iso.IFA_NUMERIC"/>
+  <isofield
+      id="7"
+      length="4"
+      name="Key Label Acro"
+      class="org.jpos.iso.IFA_LCHAR"/>
+  </isofieldpackager>
   <isofield
       id="125"
       length="999"
